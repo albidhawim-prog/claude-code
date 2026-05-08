@@ -28,20 +28,18 @@
 
 ---
 
-## 2. Prerequisites the user must complete before you start
+## 2. Prerequisites — already in place
 
-Confirm each of these before moving on:
+The user has already created both repos under the GitHub account `mizanpressco-hash`:
 
-1. **GitHub account exists.** If not, walk them through signing up at github.com (free).
-2. **The `mizan-vault` private repo exists.** The cloud session could not create it (scope restriction). Walk the user through:
-   - github.com → top-right `+` → New repository
-   - Name: `mizan-vault`
-   - Description: `Mizan project knowledge vault`
-   - Visibility: **Private**
-   - Initialize with README: ✓
-   - No .gitignore template, no license
-   - Click **Create repository**
-3. **The user is sitting at the MacBook.** That's the easiest device to debug on; do it first end-to-end before touching any other device.
+- **Vault repo:** https://github.com/mizanpressco-hash/mizan-vault — this is what this plan sets up.
+- **Code repo:** https://github.com/mizanpressco-hash/mizan-project — for the actual project code; out of scope for this plan but linked from the vault later (see §7).
+
+Before starting Phase A, confirm with the user:
+
+1. They can sign in to GitHub on the MacBook as `mizanpressco-hash`.
+2. They are sitting at the **MacBook**. Get the MacBook working end-to-end before touching any other device.
+3. (Sanity check) Visit https://github.com/mizanpressco-hash/mizan-vault in a browser. It should load (it's private, so only the signed-in owner sees it). If it 404s, the user is signed in as the wrong account — fix that first.
 
 ---
 
@@ -154,7 +152,7 @@ mizan-vault/
 
 1. **Install GitHub Desktop** from `desktop.github.com`. This is the simplest way to handle GitHub login on a Mac — it stores credentials system-wide so the Obsidian plugin can use them invisibly.
 2. **Sign in** to GitHub Desktop with the user's account.
-3. **Clone the repo via GitHub Desktop**: File → Clone repository → pick `mizan-vault` → choose `~/Documents/mizan-vault` as the local path → Clone.
+3. **Clone the repo via GitHub Desktop**: File → Clone repository → pick `mizanpressco-hash/mizan-vault` → choose `~/Documents/mizan-vault` as the local path → Clone.
 4. **Install Obsidian** from `obsidian.md` if not already installed.
 5. **Open the vault**: Obsidian → "Open folder as vault" → choose `~/Documents/mizan-vault`. Trust the author when prompted.
 6. **Enable community plugins**: Settings (gear) → Community plugins → "Turn on community plugins."
@@ -183,14 +181,14 @@ This is what makes "save this to Mizan" actually work.
 
 1. Install git and gh (`sudo apt install git gh` or distro equivalent).
 2. `gh auth login` → follow prompts, pick HTTPS, authenticate via browser.
-3. `git clone https://github.com/<username>/mizan-vault.git ~/mizan-vault`
+3. `git clone https://github.com/mizanpressco-hash/mizan-vault.git ~/mizan-vault`
 4. (Optional) Install Obsidian via Flatpak/AppImage if the Linux box has a GUI. Otherwise the user can just edit markdown with their preferred editor.
 5. To pull updates: `cd ~/mizan-vault && git pull`. To push: `git add . && git commit -m "..." && git push`. (No Obsidian Git plugin here — but they can run a local Claude Code session against this folder too.)
 
 ### Phase D — Windows desktop and Windows laptop
 
 Same as MacBook:
-1. Install GitHub Desktop, sign in, clone `mizan-vault` to e.g. `C:\Users\<user>\Documents\mizan-vault`.
+1. Install GitHub Desktop, sign in as `mizanpressco-hash`, clone `mizanpressco-hash/mizan-vault` to e.g. `C:\Users\<user>\Documents\mizan-vault`.
 2. Install Obsidian.
 3. Open folder as vault.
 4. Install + enable Obsidian Git plugin with the same settings as Phase A step 8.
@@ -200,7 +198,7 @@ Same as MacBook:
 
 1. Install Obsidian from the Play Store.
 2. Create a **fine-grained Personal Access Token** at github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token:
-   - Resource owner: the user
+   - Resource owner: `mizanpressco-hash`
    - Repository access: **Only select repositories** → `mizan-vault`
    - Permissions: Contents = Read and write, Metadata = Read-only
    - Expiration: 90 days (set a calendar reminder to rotate)
@@ -208,9 +206,9 @@ Same as MacBook:
 3. In Obsidian on Android: open Obsidian → Create new vault → name it `mizan-vault` → location: pick a folder (use Obsidian's app-internal storage, not /sdcard, to avoid Android storage permission issues).
 4. Enable community plugins → install **Obsidian Git** → enable.
 5. In Obsidian Git settings on Android:
-   - Authentication → Username: the user's GitHub username
+   - Authentication → Username: `mizanpressco-hash`
    - Authentication → Password/Token: paste the fine-grained PAT
-   - Then: Command Palette → "Obsidian Git: Clone an existing remote repo" → URL: `https://github.com/<username>/mizan-vault.git`
+   - Then: Command Palette → "Obsidian Git: Clone an existing remote repo" → URL: `https://github.com/mizanpressco-hash/mizan-vault.git`
 6. Same auto-pull/push settings as Phase A step 8.
 7. Verify by making a small edit on Android and watching it appear on the MacBook (and vice versa).
 
@@ -251,6 +249,6 @@ Two options. Try Option 1 first; fall back to Option 2 if the vault grows large 
 
 ## 7. Open items / future work
 
-- Set up a separate `mizan` (or whatever name) repo for the project's actual code, once there's code to write.
+- **Code repo already exists:** https://github.com/mizanpressco-hash/mizan-project — the actual project code lives there. Once it has content, drop a note in `05-Code-Links/` of the vault that points at it (e.g. a markdown file listing the repo URL, key entry-point files, and how the code maps to the strategy notes). That's the simplest version of the "live layer between chats and code" the user asked for.
 - Decide whether to install Claude Code on Android/iOS (the user mentioned wanting on-the-go access — currently Claude on mobile is via the chat apps, not Claude Code). For now, on-the-go capture works by: chat with Claude in the mobile app → ask it to format the takeaway as markdown → user pastes it into Obsidian on their phone → auto-pushes via Obsidian Git. Not as smooth as desktop but works.
 - Revisit whether Obsidian Sync (paid) is worth adding *on top of* GitHub for faster mobile sync. Not needed initially.
