@@ -41,6 +41,19 @@ Before starting Phase A, confirm with the user:
 2. They are sitting at the **MacBook**. Get the MacBook working end-to-end before touching any other device.
 3. (Sanity check) Visit https://github.com/mizanpressco-hash/mizan-vault in a browser. It should load (it's private, so only the signed-in owner sees it). If it 404s, the user is signed in as the wrong account — fix that first.
 
+### Device order
+
+The MacBook is **not currently available**. Start on the **Windows workstation** instead — it's the most capable device on hand and the easiest to debug. The order is:
+
+1. **Windows workstation** (Phase D below) — set up vault + verify push/pull
+2. **Live bridge** (Phase B) — connect Claude Code to the vault on the workstation
+3. **Android Fold 7** (Phase E)
+4. **iPad** (Phase F)
+5. **iPhone** (Phase F)
+6. **MacBook**, **Windows laptop**, **Linux CLI** — whenever they come online (Phases A, D, C respectively)
+
+Don't move past step 2 until you've confirmed Claude can write a note from the workstation and it appears on github.com.
+
 ---
 
 ## 3. Recommended vault folder structure
@@ -170,12 +183,16 @@ mizan-vault/
 
 ### Phase B — Connect Claude to the vault (the live bridge)
 
-This is what makes "save this to Mizan" actually work.
+This is what makes "save this to Mizan" actually work. Run this on whichever device is hosting the Claude Code session — initially the **Windows workstation**.
 
-1. From a terminal on the MacBook: `cd ~/Documents/mizan-vault`
-2. Start a Claude Code session there: `claude`
-3. The session now has direct file access to the vault. When the user says *"save this framework as 'X' in Mizan"*, Claude writes `01-Strategy/Frameworks/X.md`, commits, and pushes — and Obsidian Git on every other device pulls it in.
-4. Test: ask Claude in that session to "create a framework note called 'hello world' using the framework template." Claude should write the file and run `git add . && git commit -m "..." && git push`. Confirm it appears on github.com.
+**Windows (workstation):**
+1. Open a terminal — PowerShell, Windows Terminal, or WSL all work. WSL is recommended if Claude Code is already installed there.
+2. `cd` into the cloned vault folder, e.g. `cd C:\Users\<user>\Documents\mizan-vault` (or `cd /mnt/c/Users/<user>/Documents/mizan-vault` from WSL).
+3. Start a Claude Code session: `claude`
+4. The session now has direct file access to the vault. When the user says *"save this framework as 'X' in Mizan"*, Claude writes `01-Strategy/Frameworks/X.md`, commits, and pushes — and Obsidian Git on every other device pulls it in.
+5. Test: ask Claude in that session to "create a framework note called 'hello world' using the framework template." Claude should write the file and run `git add . && git commit -m "..." && git push`. Confirm it appears on github.com.
+
+**MacBook (when available):** Same flow from `~/Documents/mizan-vault` in a terminal.
 
 ### Phase C — Linux CLI machine
 
